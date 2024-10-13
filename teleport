@@ -1,5 +1,5 @@
 ADDRESSES="$HOME/.config/.tp_addresses"
-PREFIX="[ TP ] :: "
+TP_PREFIX="[ TP ] :: "
 
 # color codes
 RED='\033[0;31m'       
@@ -18,7 +18,7 @@ print_result() {
 	local result=$2
 	
 	echo "---------------------------------------------------------------------------"
-	printf "$color$PREFIX${RESET}$result"
+	printf "$color$TP_PREFIX${RESET}$result"
 	echo
 	echo "---------------------------------------------------------------------------"
 }
