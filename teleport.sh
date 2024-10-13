@@ -13,11 +13,18 @@ if [[ ! -f "$ADDRESSES" ]]; then
     touch "$ADDRESSES"
 fi
 
+print_result() {
+	local result=$1
+	local color=$2
+	
+	echo "---------------------------------------------------------------------------"
+	printf "$color$PREFIX${RESET}$result"
+	echo
+	echo "---------------------------------------------------------------------------"
+}
+
 list_addresses() {
-	echo "--------------------------------------------------"
-	printf "${GREEN}%s${RESET}[ id ] => directory" "$PREFIX"
-    echo
-    echo "--------------------------------------------------"
+	print_result "${GREEN}" "active shortcuts"
     # read the addresses, sort them by name, and then format the output
     while IFS='|' read -r name dir; do
 		print_dir="$dir"
@@ -32,10 +39,7 @@ list_addresses() {
 }
 
 prune_addresses() {
-	echo "--------------------------------------------------"
-	printf "${GREEN}$PREFIX${RESET}pruning addresses"
-    echo
-    echo "--------------------------------------------------"
+	print_result "${GREEN}" "pruning addresses"
 	while IFS='|' read -r name dir; do
 		print_id="[ ${YELLOW}$name${RESET} ] => \t"
 		print_dir="${GREEN}OKAY${RESET}"
@@ -55,10 +59,7 @@ prune_addresses() {
 }
 
 print_help() {
-	echo "---------------------------------------------------------------------------"
-	printf "${BLUE}%s${RESET} :: A SIMPLE DIRECTORY TELEPORTER" "[ TP ]"
-	echo
-	echo "---------------------------------------------------------------------------"
+	print_result "${BLUE}" "A SIMPLE DIRECTORY TELEPORTER"
 	
 	printf "[ ${GREEN}<ID>${RESET} ] (-v OPT)"
 	printf "\n\tjump to address. flag -v to start nvim immediately.\n\n"
@@ -81,7 +82,7 @@ print_help() {
 	printf "[ ${GREEN}-help${RESET}, ${GREEN}-h${RESET} ]"
 	printf "\n\tprint this screen.\n\n"
 
-	echo
+	echo	
 
 }
 
@@ -97,10 +98,7 @@ elif [[ "$1" == "-set" || "$1" == "-s" ]]; then
 
     # check if the new directory exists
     if [[ ! -d "$new_dir" ]]; then
-		echo "---------------------------------------------------------------------------"
-        printf "${RED}%s${RESET}'$new_dir' is not a valid directory." "$PREFIX"
-        echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${RED}" "'$new_dir' is not a valid directory."
 		return
     fi
 
@@ -111,35 +109,23 @@ elif [[ "$1" == "-set" || "$1" == "-s" ]]; then
 
 		# append new address
         echo "$name|$new_dir" >> "$ADDRESSES"
-		echo "---------------------------------------------------------------------------"
-		printf "${GREEN}%s${RESET}address [ ${YELLOW}%s${RESET} ] => '%s'." "$PREFIX" "$name" "$new_dir"
-		echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${GREEN}" "address [ ${YELLOW}$name${RESET} ] => '$new_dir'."
     else
 		# add new address
         echo "$name|$new_dir" >> "$ADDRESSES"
-		echo "---------------------------------------------------------------------------"
-		printf "${GREEN}$PREFIX${RESET}added new address [ ${YELLOW}$name${RESET} ]."
-        echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${GREEN}" "added new address [ ${YELLOW}$name${RESET} ]."
     fi
 
 
 elif [[ "$1" == "-unset" || $1 == "-u" ]]; then
 	name="$2"
 	if [[ -z "$name" ]]; then
-		echo "---------------------------------------------------------------------------"
-		printf "${RED}%s${RESET}no address was given." "$PREFIX"
-        echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${RED}" "no address was given."
 		return
 	fi
  
     if ! grep -q "^$name|" "$ADDRESSES"; then
-		echo "---------------------------------------------------------------------------"
-		printf "${YELLOW}$PREFIX${RESET}address '$name' does not exist."
-		echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${YELLOW}" "address '$name' does not exist."
 		return
 	fi
 
@@ -149,19 +135,13 @@ elif [[ "$1" == "-unset" || $1 == "-u" ]]; then
 	# check if the address was found and removed
 	if [[ $? -eq 0 && -s "$ADDRESSES.tmp" ]]; then
 		mv -f "$ADDRESSES.tmp" "$ADDRESSES"
-		echo "---------------------------------------------------------------------------"
-		printf "${GREEN}%s${RESET}address '%s' removed." "$PREFIX" "$name"
-		echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${GREEN}" "address '$name' removed."
 	fi
 
 	
 elif [[ "$1" == "-unset-all" || "$1" == "-ua" ]]; then
     > "$ADDRESSES"
-	echo "---------------------------------------------------------------------------"
-    printf "${GREEN}%s${RESET}all addresses cleared." "$PREFIX"     
-	echo
-	echo "---------------------------------------------------------------------------"
+	print_result "${GREEN}" "all addresses cleared"
 
 
 elif [[ "$1" == "-list" || "$1" == "-l" ]]; then
@@ -198,18 +178,12 @@ else
 			if [[ "$2" == "-v" ]]; then 
 				nvim
 			fi
-		else 
-			echo "---------------------------------------------------------------------------"
-			printf "${RED}$PREFIX${RESET}'$dir' was not found."
-			echo
-			echo "---------------------------------------------------------------------------"
+		else
+			print_result "${RED}" "'$dir' was not found."
 			return
 		fi
 	else 
-		echo "---------------------------------------------------------------------------"
-		printf "${RED}$PREFIX${RESET}address [ ${YELLOW}$name${RESET} ]  is not set to anything."
-		echo
-		echo "---------------------------------------------------------------------------"
+		print_result "${RED}" "address [ ${YELLOW}$name${RESET} ] is not set to anything."
 		return
 	fi
 fi

@@ -7,11 +7,11 @@
 | -------------------------------- | ------------------------------------------------------------------- |
 | `tp <ID>`                        | jump to saved address, or change directories based on address given |
 | `tp <ID> -v`                     | jump to address and start neovim.                                   |
-| `tp -list \| -l`                 | list all saved addresses.                                           |
-| `tp -set \| -s <ID> <DIRECTORY>` | create or edit an address.                                          |
-| `tp -unset \| -u <ID>`           | delete a saved address by id.                                       |
-| `tp -unset-all \| -ua`           | delete all addresses.                                               |
-| `tp -prune \| -p`                | remove all addresses with inaccessible directories.                 |
+| `tp -list\|-l`                 | list all saved addresses.                                           |
+| `tp -set\|-s <ID> <DIRECTORY>` | create or edit an address.                                          |
+| `tp -unset\|-u <ID>`           | delete a saved address by id.                                       |
+| `tp -unset-all\|-ua`           | delete all addresses.                                               |
+| `tp -prune\|-p`                | remove all addresses with inaccessible directories.                 |
 
 ### INSTALLATION
 1. clone this repository and move into the directory.
