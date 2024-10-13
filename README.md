@@ -1,22 +1,6 @@
 # tp - simple directory teleporter
 
-**tp** is a bash script that allows quick navigation to frequently used directories by saving and managing shortcuts.
-
-### INSTALLATION
-1. clone this repository
-```bash
-git clone https://github.com/latchk3y/tp.git && cd tp
-```
-
-2. run the install script.
-```bash
-sudo ./install.sh
-```
-
-3. restart your terminal, or type:
-```bash
-source ~/.bashrc
-```
+**tp** is a bash script that allows quick navigation to frequently used directories by saving and managing shortcuts. 
 
 ### USAGE
 | command                          | description                                                         |
@@ -29,12 +13,29 @@ source ~/.bashrc
 | `tp -unset-all \| -ua`           | delete all addresses.                                               |
 | `tp -prune \| -p`                | remove all addresses with inaccessible directories.                 |
 
+### INSTALLATION
+1. clone this repository and move into the directory.
+```bash
+git clone https://github.com/latchk3y/tp.git && cd tp
+```
+
+2. run the install script. you must be able to copy into the `/usr/local/bin` folder, so run with sudo.
+```bash
+sudo ./install.sh
+```
+
+3. restart your terminal, or type the following.
+```bash
+source ~/.bashrc
+```
+
+
 ### EXAMPLE
 ```bash
 tp -set proj /path/to/project
-tp proj -v   # Navigates to /path/to/project and opens it in Neovim
-tp -l        # Lists all addresses
-tp -u proj   # Removes the 'proj' address
+tp proj -v   # navigates to /path/to/project and opens it in Neovim
+tp -l        # lists all addresses
+tp -u proj   # removes the 'proj' address
 ```
 
 ### LICENSE
