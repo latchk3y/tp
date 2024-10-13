@@ -14,8 +14,8 @@ if [[ ! -f "$ADDRESSES" ]]; then
 fi
 
 print_result() {
-	local result=$1
-	local color=$2
+	local color=$1
+	local result=$2
 	
 	echo "---------------------------------------------------------------------------"
 	printf "$color$PREFIX${RESET}$result"
