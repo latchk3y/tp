@@ -30,7 +30,7 @@ else
 fi
 
 # Check if the tp function is already in ~/.bashrc
-if grep -q 'TP :: a simple directory teleporter' ~/.bashrc; then
+if grep -qF 'TP :: a simple directory teleporter' ~/.bashrc; then
     printf "${YELLOW}$TP_INST_PREFIX${RESET} tp has already been defined in ~/.bashrc; skipping."
     echo 
 else
@@ -39,11 +39,16 @@ else
 	# TP :: a simple directory teleporter
 	tp() {
 		local flags=\"\$@\"
-		./usr/local/bin/teleport \$flags
+		source teleport \$flags
 	}
 	" >> ~/.bashrc 
 
     # Check if the function was successfully added
+	
+	echo "Checking ~/.bashrc for 'TP :: a simple directory teleporter'..."
+	grep -n 'TP :: a simple directory teleporter' ~/.bashrc
+
+sfasfweg
     if grep -Fxq 'TP :: a simple directory teleporter' ~/.bashrc; then
         printf "${GREEN}$TP_INST_PREFIX${RESET} added tp to ~/.bashrc."
         echo
