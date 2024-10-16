@@ -44,19 +44,14 @@ else
 	" >> ~/.bashrc 
 
     # Check if the function was successfully added
-	
-	echo "Checking ~/.bashrc for 'TP :: a simple directory teleporter'..."
-	grep -n 'TP :: a simple directory teleporter' ~/.bashrc
-
-sfasfweg
     if grep -Fxq 'TP :: a simple directory teleporter' ~/.bashrc; then
         printf "${GREEN}$TP_INST_PREFIX${RESET} added tp to ~/.bashrc."
         echo
     else
         printf "${RED}$TP_INST_PREFIX${RESET} failed to add tp to ~/.bashrc. See /tmp/error.log for details."
         echo
-        cat /tmp/error.log  # Show error log contents
-        exit 1
+        cat /tmp/error.log 
+		exit 1
     fi
 fi
 
