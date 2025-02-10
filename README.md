@@ -2,7 +2,8 @@
 
 **tp** is a bash script that allows quick navigation to frequently used directories by saving and managing shortcuts. 
 
-### USAGE
+### USAGE[[README 1]]
+
 | command                          | description                                                         |
 | -------------------------------- | ------------------------------------------------------------------- |
 | `tp <ID>`                        | jump to saved address, or change directories based on address given |
